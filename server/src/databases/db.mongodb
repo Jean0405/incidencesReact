@@ -1,0 +1,40 @@
+use("incidentsDB");
+db.createCollection("reports", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: [
+        "title",
+        "description",
+        "ubication",
+        "category",
+        "severity",
+        "state",
+        "camper",
+      ],
+      properties: {
+        title: {
+          bsonType: "string",
+          maxLength: 30,
+          pattern: "^[a-zA-Z0-9 ]+$",
+        },
+        description: {
+          bsonType: "string",
+          maxLength: 200,
+        },
+        ubication: {
+          bsonType: "object",
+          required: ["_id", "name"],
+          properties: {
+            _id: {
+              bsonType: "objectId",
+            },
+            name: {
+              bsonType: "string",
+            },
+          },
+        },
+      },
+    },
+  },
+});
