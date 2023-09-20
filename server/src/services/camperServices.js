@@ -11,8 +11,10 @@ export const postNewReport = async (info) => {
 
   //we create the structure with which we will save the new report
   const newReport = {
-    ...info,
     date: currentDate,
+    severity: "mild",
+    state: "not solved",
+    ...info,
   };
 
   //Insert new report to Database
