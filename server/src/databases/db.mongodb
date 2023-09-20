@@ -59,7 +59,7 @@ db.createCollection("reports", {
           bsonType: "object",
           properties: {
             _id: {
-              bsonType: "objectId",
+              bsonType: "string",
             },
             username: {
               bsonType: "string",
@@ -70,7 +70,7 @@ db.createCollection("reports", {
           bsonType: "object",
           properties: {
             _id: {
-              bsonType: "objectId",
+              bsonType: "string",
             },
             username: {
               bsonType: "string",
@@ -131,16 +131,16 @@ db.createCollection("users", {
 });
 
 
-// use("incidentsDB");
-// db.reports.insertOne({
-//   title: "Mi primer informe",
-//   description: "Esta es una descripción del informe.",
-//   ubication: ObjectId("6328b68663699c5682000000"),
-//   category: "digital",
-//   severity: "mild",
-//   state: "not solved",
-//   camper: {
-//     _id: ObjectId("6328b68663699c5682000001"),
-//     username: "camper1",
-//   },
-// });
+use("incidentsDB");
+db.reports.insertOne({
+  title: "Mi primer informe",
+  description: "Esta es una descripción del informe.",
+  ubication: "6328b68663699c5682000000",
+  category: "digital",
+  severity: "mild",
+  state: "not solved",
+  camper: {
+    _id:"6328b68663699c5682000001",
+    username: "camper1",
+  },
+});
