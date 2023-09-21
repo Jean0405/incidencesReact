@@ -36,35 +36,6 @@ export const getReportById = async (reportId) => {
 };
 
 /**
- * *PUT REPORT
- */
-export const putReport = async (info) => {
-  let db = await connDB();
-  let collection = db.collection("reports");
-
-  const filter = {
-    _id: new ObjectId(info._id),
-  };
-
-  const update = {
-    $set: {
-      severity: info.severity,
-      trainer: {
-        _id: info.trainer._id,
-        username: info.trainer.username,
-      },
-      support: {
-        _id: info.support._id,
-        username: info.support.username,
-      },
-    },
-  };
-
-  let data = await collection.updateOne(filter, update);
-  return;
-};
-
-/**
  * *GET REPORTS BY STATUS
  */
 export const getReportsByStatus = async (status) => {
@@ -103,3 +74,4 @@ export const getReportsByUsername = async (username) => {
   }
   return camper;
 };
+
