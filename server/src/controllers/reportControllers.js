@@ -1,7 +1,7 @@
 import * as reportServices from "../services/reportServices.js";
 
 /**
- * *CREATE NEW REPORT ABOUT AN INCIDENT
+ * *GET REPORT BY ID
  */
 export const getReportById = async (req, res) => {
   try {
@@ -17,22 +17,6 @@ export const getReportById = async (req, res) => {
       message: "ERROR GETTING THE REPORT",
       errorInfo: error.message,
     });
-  }
-};
-
-/**
- * *GET REPORT BY ID
- */
-export const postNewReport = async (req, res) => {
-  try {
-    let data = await reportServices.postNewReport(req.body);
-    res.status(200).json({
-      status: 200,
-      message: "THE REPORT HAS BEEN SUCCESSFULLY REGISTERED",
-      data: data,
-    });
-  } catch (error) {
-    res.status(500).json({ status: 500, errorInfo: error.message });
   }
 };
 
