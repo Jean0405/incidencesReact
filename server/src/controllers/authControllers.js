@@ -1,47 +1,51 @@
+import { generateToken } from "../jwt/tokens.js";
 import * as authServices from "../services/authServices.js";
 
 
-export const singIn = async(req, res)=>{
+export const singIn = async (req, res) => {
   try {
     let user = await authServices.signIn(req.body);
 
-    if(!user){
+    if (!user) {
       res.status(404).json({
-        status:404,
+        status: 404,
         message: "you're no registered",
         user: req.body.username
       })
-    }else{
+    } else {
+      let jwt = await generateToken(user);
       res.status(200).json({
-        status:200,
+        status: 200,
         message: "successful login",
-        user: user
+        user: user,
+        token: jwt
       })
     }
 
   } catch (error) {
     res.status(500).json({
-      status:500,
+      status: 500,
       message: "error logging in",
       error: error.message
     })
   }
 }
 
-export const singUp = async(req, res)=>{
+export const singUp = async (req, res) => {
   try {
     let user = await authServices.singUp(req.body);
-    if(user){
-      // let jwt = await generateToken(user); 
+    if (user) {
+      let jwt = await generateToken(user);
       res.status(200).json({
-        status:200,
-        message:"User succesfully registered",
+        status: 200,
+        message: "User succesfully registered",
         user: user,
+        token: jwt
       })
-    }else{
+    } else {
       res.status(409).json({
-        status:409,
-        message:"User already exist",
+        status: 409,
+        message: "User already exist",
         user: req.body.username,
       })
     }
@@ -49,7 +53,7 @@ export const singUp = async(req, res)=>{
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      status:500,
+      status: 500,
       message: "error registering",
       error: error.message
     })
