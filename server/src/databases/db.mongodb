@@ -15,8 +15,7 @@ db.createCollection("reports", {
       properties: {
         title: {
           bsonType: "string",
-          maxLength: 30,
-          pattern: "^[a-zA-Z0-9 ]+$",
+          maxLength: 70,
           description: "title is required",
         },
         description: {
