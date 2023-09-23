@@ -1,5 +1,42 @@
+import { useState } from "react"
 
 export const CamperPage = () => {
+
+  const [ubication, setUbication] = useState("");
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+
+  let data = {
+    title: title,
+    ubication: ubication,
+    category: category,
+    description: description,
+    camper: {
+      _id: "650d836060b0f7c7c09fbfdb",
+      username: "Sevedol"
+    }
+  }
+
+  const createReport = async (e) => {
+    e.preventDefault()
+    let response = await (await fetch("http://127.25.25.26:3300/v1/campers/newReport", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })).json();
+
+    if (response.status == 200) {
+      console.log("report has been created")
+    } else {
+      console.log(response);
+    }
+  }
+
+
+
   return (
     <div>
       {/* NAVBAR */}
@@ -16,29 +53,22 @@ export const CamperPage = () => {
       {/* FORM */}
       <section className="bg-gray-2 m-auto rounded-x max-w-4xl mt-5 rounded-md">
         <div className="p-8 shadow-lg">
-          <form className="space-y-4">
+          <form className="space-y-4"
+            onSubmit={createReport}>
             <div className="w-full">
-              <input className="input input-solid max-w-full" placeholder="Title" type="text" id="name" />
+              <input name="title" value={title} onChange={(e) => setTitle(e.target.value)} className="input input-solid max-w-full" placeholder="Title" type="text" />
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 max-w-full">
+              <div className="flex flex-col justify-center items-center">
                 <p className="font-bold text-sky-800">Ubication</p>
-                <select className="select select-solid-primary max-w-full mt-1">
-                  <option>Sputnik</option>
-                  <option>Apolo</option>
-                  <option>Artemis</option>
-                  <option>Review 1</option>
-                  <option>Review 2</option>
-                  <option>Hunters</option>
-                </select>
-              </div>
-              <div>
-                <p className="font-bold text-sky-800">Severity</p>
-                <select className="select select-solid-primary max-w-full mt-1">
-                  <option>Mild</option>
-                  <option>Medium</option>
-                  <option>Serious</option>
+                <select value={ubication} onChange={(e) => setUbication(e.target.value)} className="select select-solid-primary max-w-full mt-1">
+                  <option value="sputnik">Sputnik</option>
+                  <option value="apolo">Apolo</option>
+                  <option value="artemis">Artemis</option>
+                  <option value="review 1">Review 1</option>
+                  <option value="review 2">Review 2</option>
+                  <option value="hunters">Hunters</option>
                 </select>
               </div>
             </div>
@@ -47,20 +77,20 @@ export const CamperPage = () => {
               <div id="group1" className="flex flex-row gap-3 justify-center items-center">
                 <div className="flex flex-row gap-2 items-center">
                   <label htmlFor="radio1">Digital</label>
-                  <input type="radio" className="radio radio-bordered-primary" name="category" />
+                  <input name="category" value="digital" checked={category === "digital"} onChange={(e) => setCategory(e.target.value)} type="radio" className="radio radio-bordered-primary" />
                 </div>
                 <div className="flex flex-row gap-2 items-center">
                   <label htmlFor="radio1">Physical</label>
-                  <input type="radio" className="radio radio-bordered-primary" name="category" />
+                  <input name="category" value="physical" checked={category === "physical"} onChange={(e) => setCategory(e.target.value)} type="radio" className="radio radio-bordered-primary" />
                 </div>
               </div>
             </div>
             <div className="w-full">
-              <textarea className="textarea textarea-solid max-w-full" placeholder="Description" rows="8" id="message"></textarea>
+              <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)} className="textarea textarea-solid max-w-full" placeholder="Description" rows="8" id="message"></textarea>
             </div>
 
             <div className="mt-4">
-              <button type="button" className="rounded-lg btn btn-primary btn-block">Create Report</button>
+              <button type="submit" className="rounded-lg btn btn-primary btn-block">Create Report</button>
             </div>
           </form>
         </div>

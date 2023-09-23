@@ -1,5 +1,6 @@
 console.clear();
 import "dotenv/config";
+import cors from "cors";
 import express from "express";
 
 import v1Routes from "./v1/index.js";
@@ -13,6 +14,7 @@ const APP = express();
 
 //middlewares
 APP.use(express.json());
+APP.use(cors())
 
 //routes
 APP.use("/v1", v1Routes);
