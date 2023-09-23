@@ -6,7 +6,7 @@ export const singIn = async (req, res) => {
   try {
     let user = await authServices.signIn(req.body);
 
-    if (!user) {
+    if (!user.length) {
       res.status(404).json({
         status: 404,
         message: "you're no registered",
