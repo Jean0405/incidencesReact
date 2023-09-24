@@ -1,8 +1,13 @@
-import { useState } from "react"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useLocation } from "react-router-dom";
+import { useState } from "react"
 
-export const CamperPage = (props) => {
+import { Navbar } from "../Navbar";
+
+export const CamperPage = () => {
+  const location = useLocation();
+  let user = location.state.user;
 
   const [ubication, setUbication] = useState("");
   const [title, setTitle] = useState("");
@@ -16,14 +21,14 @@ export const CamperPage = (props) => {
     category: category,
     description: description,
     camper: {
-      _id: "650d836060b0f7c7c09fbfdb",
-      username: "Sevedol"
+      _id: user._id,
+      username: user.username
     }
   }
 
   const createReport = async (e) => {
     e.preventDefault()
-    let response = await (await fetch("http://127.25.25.26:3300/v1/campers/newReport", {
+    let response = await (await fetch("http://127.26.26.27:3300/v1/campers/newReport", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -50,35 +55,13 @@ export const CamperPage = (props) => {
     }
   }
 
-
-
   return (
     <div className="h-screen">
       {/* NAVBAR */}
-      <div className="navbar sm:w-full md:1/2">
-        <div className="navbar-start">
-          <a className="hidden sm:block md:block lg:block navbar-item font-bold text-primary">CAMPUSLANDS</a>
-        </div>
-        <div className="navbar-end">
-          <a className="navbar-item bg-primary font-bold px-4">+</a>
-          <a className="navbar-item">Sevedol</a>
-          <div className="avatar avatar-ring avatar-md">
-            <div className="dropdown-container">
-              <div className="dropdown">
-                <label className="btn btn-ghost flex cursor-pointer px-0" tabIndex="0">
-                  <div className="font-bold">S</div>
-                </label>
-                <div className="dropdown-menu dropdown-menu-bottom-left">
-                  <a className="dropdown-item text-sm">Log Out</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Navbar user={user}/>
       {/* USER WELCOME */}
       <div>
-        <h1 className="text-4xl font-bold text-center pt-3">Welcome <span className="text-sky-500">Camper</span></h1>
+        <h1 className="text-4xl font-bold text-center pt-3">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
       </div>
       {/* FORM */}
       <div className="mx-5">
