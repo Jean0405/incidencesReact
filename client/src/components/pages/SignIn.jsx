@@ -7,48 +7,35 @@ export const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-
   //API REQUEST
-  const Fetch = async (event) => {
+  const signIn = async (event) => {
     event.preventDefault();
 
-    try {
-      let result = await (
-        await fetch("http://192.168.129.72:5176/auth/login", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: {
-            username, password
-          }
-        })
-      ).json();
-
-      //IF USER NOT FOUND
-      if (result.status == 200) {
-        localStorage.setItem("token", result.token);
-        redirect("/home", {
-          state: {
-            user: {
-              username: result.data.username,
-              email: result.data.email
+    let response = await (await fetch("http://127.26.26.27:3300/v1/auth/signIn", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password
+      })
+    })).json();
+      if(response.status == 200){
+        if(response.user[0].role == "camper"){
+          redirect("/camperPage",{
+            state:{
+              user: response.user[0]
             }
-          }
-        })
-      } else {
-        alert("User not found");
+          })
+        }
       }
-
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
     <div>
       <form
-        onSubmit={Fetch}
+        onSubmit={signIn}
         id="formSignIn"
         className="h-screen flex flex-col justify-center items-center gap-3 p-2"
       >
