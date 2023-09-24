@@ -22,6 +22,7 @@ export const SignIn = () => {
       })
     })).json();
       if(response.status == 200){
+        localStorage.setItem("token", response.token)
         if(response.user[0].role == "camper"){
           redirect("/camperPage",{
             state:{

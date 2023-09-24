@@ -56,7 +56,7 @@ export const CamperPage = () => {
   }
 
   return (
-    <div className="h-screen">
+    <div className="h-auto bg-zinc-950 pb-5">
       {/* NAVBAR */}
       <Navbar user={user}/>
       {/* USER WELCOME */}

@@ -6,6 +6,10 @@ export const Navbar = (props) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
+  function handleLogOut() {
+    localStorage.removeItem("token")
+  }
+
   let role = capitalizeFirstLetter(props.user.role);
   let username = capitalizeFirstLetter(props.user.username);
 
@@ -24,7 +28,7 @@ export const Navbar = (props) => {
                   <div className="font-bold">{username[0]}</div>
                 </label>
                 <div className="dropdown-menu dropdown-menu-bottom-left">
-                  <Link to="/" className="dropdown-item text-sm">Log Out</Link>
+                  <Link to="/" onClick={handleLogOut} className="dropdown-item text-sm">Log Out</Link>
                 </div>
               </div>
             </div>
