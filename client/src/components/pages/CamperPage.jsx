@@ -28,7 +28,7 @@ export const CamperPage = () => {
 
   const createReport = async (e) => {
     e.preventDefault()
-    let response = await (await fetch("http://127.26.26.27:3300/v1/campers/newReport", {
+    let response = await (await fetch("http://192.168.129.72:5176/v1/campers/newReport", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -56,9 +56,9 @@ export const CamperPage = () => {
   }
 
   return (
-    <div className="h-auto bg-zinc-950 pb-5">
+    <div className="h-screen bg-zinc-950 pb-5">
       {/* NAVBAR */}
-      <Navbar user={user}/>
+      <Navbar user={user} />
       {/* USER WELCOME */}
       <div>
         <h1 className="text-4xl font-bold text-center pt-3">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>

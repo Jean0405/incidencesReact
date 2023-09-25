@@ -11,7 +11,7 @@ export const SignIn = () => {
   const signIn = async (event) => {
     event.preventDefault();
 
-    let response = await (await fetch("http://127.26.26.27:3300/v1/auth/signIn", {
+    let response = await (await fetch("http://192.168.129.72:5176/v1/auth/signIn", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -21,16 +21,16 @@ export const SignIn = () => {
         password: password
       })
     })).json();
-      if(response.status == 200){
-        localStorage.setItem("token", response.token)
-        if(response.user[0].role == "camper"){
-          redirect("/camperPage",{
-            state:{
-              user: response.user[0]
-            }
-          })
-        }
+    if (response.status == 200) {
+      localStorage.setItem("token", response.token)
+      if (response.user[0].role == "camper") {
+        redirect("/camperPage", {
+          state: {
+            user: response.user[0]
+          }
+        })
       }
+    }
   };
 
   return (
