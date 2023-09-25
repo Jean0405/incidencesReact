@@ -15,26 +15,131 @@ db.createCollection("reports", {
       properties: {
         title: {
           bsonType: "string",
-          maxLength: 30,
-          pattern: "^[a-zA-Z0-9 ]+$",
+          maxLength: 70,
+          description: "title is required",
         },
         description: {
           bsonType: "string",
           maxLength: 200,
+          description: "description is required",
         },
         ubication: {
+          bsonType: "string",
+          description: "ubication is required",
+        },
+        category: {
+          bsonType: "string",
+          enum: ["digital", "physical"],
+          description: "category is required",
+        },
+        severity: {
+          bsonType: "string",
+          enum: ["mild", "medium", "serious"],
+        },
+        state: {
+          bsonType: "string",
+          enum: ["not solved", "in process", "solved"],
+        },
+        date: {
+          bsonType: "date",
+        },
+        camper: {
           bsonType: "object",
-          required: ["_id", "name"],
           properties: {
             _id: {
-              bsonType: "objectId",
+              bsonType: "string",
             },
-            name: {
+            username: {
+              bsonType: "string",
+            },
+          },
+        },
+        trainer: {
+          bsonType: "object",
+          properties: {
+            _id: {
+              bsonType: "string",
+            },
+            username: {
+              bsonType: "string",
+            },
+          },
+        },
+        support: {
+          bsonType: "object",
+          properties: {
+            _id: {
+              bsonType: "string",
+            },
+            username: {
+              bsonType: "string",
+            },
+            diagnosis: {
               bsonType: "string",
             },
           },
         },
       },
     },
+  },
+});
+
+use("incidentsDB");
+db.createCollection("ubications", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name"],
+      properties: {
+        name: {
+          bsonType: "string",
+          description: "name ubication is required",
+        },
+      },
+    },
+  },
+});
+
+use("incidentsDB");
+db.createCollection("users", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["username", "email", "password", "role"],
+      properties: {
+        username: {
+          bsonType: "string",
+          description: "username is required",
+        },
+        email: {
+          bsonType: "string",
+          description: "email is required",
+        },
+        password: {
+          bsonType: "string",
+          description: "password is required",
+        },
+        role: {
+          bsonType: "string",
+          enum: ["camper", "trainer", "support"],
+          description: "role is required",
+        },
+      },
+    },
+  },
+});
+
+
+use("incidentsDB");
+db.reports.insertOne({
+  title: "Mi primer informe",
+  description: "Esta es una descripción del informe.",
+  ubication: "6328b68663699c5682000000",
+  category: "digital",
+  severity: "mild",
+  state: "not solved",
+  camper: {
+    _id:"6328b68663699c5682000001",
+    username: "camper1",
   },
 });
