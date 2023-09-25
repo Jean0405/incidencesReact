@@ -28,7 +28,7 @@ export const CamperPage = () => {
 
   const createReport = async (e) => {
     e.preventDefault()
-    let response = await (await fetch("http://192.168.129.72:5176/v1/campers/newReport", {
+    let response = await (await fetch("http://127.25.25.26:3300/v1/campers/newReport", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
