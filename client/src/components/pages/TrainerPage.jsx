@@ -28,7 +28,8 @@ export const TrainerPage = () => {
     getIncidents()
   }, [status])
 
-  const handleSubmit = async (event) => {
+  //FETCH REPORTS BY USERNAME
+  const getIncidentByUsername = async (event) => {
     event.preventDefault();
     let res = await (await fetch(`http://127.25.25.26:3300/v1/reports/user=${username}`, {
       method: "GET",
@@ -37,9 +38,27 @@ export const TrainerPage = () => {
         Authorization: localStorage.getItem("token")
       }
     })).json()
-    console.log(res);
+    setUsername("")
     setReports(res.data)
   }
+
+  //FETCH REPORTS BY SEVERITY
+  async function getIncidentBySeverity() {
+    const response = await (await fetch(`http://127.25.25.26:3300/v1/reports/severity=${severity.toLowerCase()}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem("token")
+      }
+    })).json();
+    setReports(response.data)
+    return;
+  }
+  useEffect(() => {
+    getIncidentBySeverity()
+  }, [severity])
+
+
 
   return (
     <div className='h-screen bg-zinc-950'>
@@ -48,9 +67,9 @@ export const TrainerPage = () => {
         <h1 className="text-4xl font-bold text-center pt-5">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
       </div>
       {/* FILTERS */}
-      <div className='grid place-items-center px-5 gap-5 grid-cols-1 md:grid-cols-3 mt-5'>
+      <div className='grid place-items-center px-5 gap-5 grid-cols-1 md:grid-cols-2 mt-5'>
         {/* USERNAME FILTER */}
-        <form className='flex self-start gap-2' onSubmit={handleSubmit}>
+        <form className='flex self-start gap-2' onSubmit={getIncidentByUsername}>
           <input type='text' name="username" value={username} onChange={(e) => setUsername(e.target.value)} className="input input-solid" placeholder="Username" />
           <input type="submit" value="Search" className='btn btn-solid-primary' />
         </form>
