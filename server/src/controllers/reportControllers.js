@@ -36,7 +36,6 @@ export const getReportByStatus = async (req, res) => {
     res.status(500).json({
       status: 500,
       message: "ERROR GETTING REPORTS",
-      data: data,
     });
   }
 };
@@ -56,7 +55,7 @@ export const getReportBySeverity = async (req, res) => {
     res.status(500).json({
       status: 500,
       message: "ERROR GETTING REPORTS",
-      data: data,
+      errorInfo: error.message,
     });
   }
 };
@@ -82,7 +81,8 @@ export const getReportByUsername = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: 500,
-      message: "ERROR GETTING REPORTS"
+      message: "ERROR GETTING REPORTS",
+      errorInfo: error.message,
     });
   }
 };
