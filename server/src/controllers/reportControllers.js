@@ -82,8 +82,7 @@ export const getReportByUsername = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: 500,
-      message: "ERROR GETTING REPORTS",
-      data: data,
+      message: "ERROR GETTING REPORTS"
     });
   }
 };
