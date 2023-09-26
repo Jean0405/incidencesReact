@@ -70,13 +70,13 @@ export const CamperPage = () => {
             <form className="space-y-4"
               onSubmit={createReport}>
               <div className="w-full">
-                <input name="title" value={title} onChange={(e) => setTitle(e.target.value)} className="input input-solid max-w-full" placeholder="Title" type="text" />
+                <input name="title" value={title} onChange={(e) => setTitle(e.target.value)} className="input input-solid max-w-full" placeholder="Title" type="text" required />
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 max-w-full">
                 <div className="flex flex-col justify-center items-center">
                   <p className="font-bold text-sky-800">Ubication</p>
-                  <select value={ubication} onChange={(e) => setUbication(e.target.value)} className="select select-solid-primary max-w-full mt-1">
+                  <select value={ubication} onChange={(e) => setUbication(e.target.value)} className="select select-solid-primary max-w-full mt-1" required>
                     <option value="sputnik">Sputnik</option>
                     <option value="apolo">Apolo</option>
                     <option value="artemis">Artemis</option>
@@ -100,7 +100,7 @@ export const CamperPage = () => {
                 </div>
               </div>
               <div className="w-full">
-                <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)} className="textarea textarea-solid max-w-full" placeholder="Description" rows="8" id="message"></textarea>
+                <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)} className="textarea textarea-solid max-w-full" placeholder="Description" rows="8" id="message" required></textarea>
               </div>
 
               <div className="mt-4">
