@@ -1,7 +1,9 @@
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from "react-router-dom";
 import { useState } from "react"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 import { Navbar } from "../Navbar";
 
@@ -64,6 +66,7 @@ export const CamperPage = () => {
         <h1 className="text-4xl font-bold text-center pt-3">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
       </div>
       {/* FORM */}
+      <button className='btn rounded-full'><FontAwesomeIcon icon={faPlus} /></button>
       <div className="mx-5">
         <section className="bg-gray-2 m-auto rounded-x max-w-4xl mt-5 rounded-md">
           <div className="p-8 shadow-lg">
