@@ -2,9 +2,9 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
-
+import 'animate.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Navbar } from "../Navbar";
 
 export const CamperPage = () => {
@@ -15,6 +15,8 @@ export const CamperPage = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+
+  const [visibility, setVisibility] = useState(false);
 
 
   let data = {
@@ -57,6 +59,7 @@ export const CamperPage = () => {
     }
   }
 
+
   return (
     <div className="h-screen bg-zinc-950 pb-5">
       {/* NAVBAR */}
@@ -66,8 +69,8 @@ export const CamperPage = () => {
         <h1 className="text-4xl font-bold text-center pt-3">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
       </div>
       {/* FORM */}
-      <button className='btn rounded-full'><FontAwesomeIcon icon={faPlus} /></button>
-      <div className="mx-5">
+      <button className='btn btn-solid-success fixed bottom-4 right-4 p-6 z-50' onClick={() => setVisibility(!visibility)}><FontAwesomeIcon icon={faPlus} /></button>
+      <div className={visibility ? "mx-5 animate__animated animate__zoomIn" : "mx-5 hidden"}>
         <section className="bg-gray-2 m-auto rounded-x max-w-4xl mt-5 rounded-md">
           <div className="p-8 shadow-lg">
             <form className="space-y-4"
@@ -75,7 +78,6 @@ export const CamperPage = () => {
               <div className="w-full">
                 <input name="title" value={title} onChange={(e) => setTitle(e.target.value)} className="input input-solid max-w-full" placeholder="Title" type="text" required />
               </div>
-
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 max-w-full">
                 <div className="flex flex-col justify-center items-center">
                   <p className="font-bold text-sky-800">Ubication</p>
