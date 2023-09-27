@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const Cards = (props) => {
 
-  let reports = props.reportData;
+  const [reports, setReports] = useState(props.reportData);
+  const [severity, setSeverity] = useState(reports.severity);
 
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -23,6 +24,9 @@ export const Cards = (props) => {
     );
   }
 
+
+
+
   return (
     <div id={reports._id} className="w-full rounded bg-zinc-200/10">
       <div className="card-body text-center">
@@ -34,33 +38,41 @@ export const Cards = (props) => {
             <input className="modal-state" id="modal-2" type="checkbox" />
             <div className="modal w-screen">
               <label className="modal-overlay" htmlFor="modal-2"></label>
-              <div className="modal-content flex flex-col gap-5 max-w-3xl">
+              <div className="modal-content flex flex-col gap-5 max-w-3xl w-screen">
                 <label htmlFor="modal-2" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
 
                 <div className="p-8 shadow-lg">
                   <form className="space-y-4">
-                    <span className="text-blue-500 text-start">{reports.camper.username}</span>
-                    <div className="grid place-items-center grid-cols-1 gap-4 sm:grid-cols-1 max-w-full">
-                      <h4 className='font-bold text-blue-500'>{reports.ubication.toUpperCase()}</h4>
-                    </div>
-                    <div className="w-full flex gap-2 justify-center pt-2">
-                      <span className={stateBadge(reports.state)}>{capitalizeFirstLetter(reports.state)}</span>
-                      <span className="badge badge-flat-primary text-blue-400">{capitalizeFirstLetter(reports.category)}</span>
-                    </div>
-                    <div className="w-full">
-                      <input value={reports.title} name="title" className="input input-solid max-w-full" placeholder="Title" type="text" disabled />
-                    </div>
-                    <div className="w-full">
-                      <textarea value={capitalizeFirstLetter(reports.description)} name="description" className="textarea textarea-solid max-w-full" placeholder="Description" rows="8" id="message" disabled></textarea>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 max-w-full">
+                      <div className="flex flex-col justify-center items-center">
+                        <p className="font-bold text-sky-800">Severity</p>
+                        <select value={severity} onChange={(e) => setSeverity(e.target.value)} className="select select-solid-primary max-w-full mt-1" required>
+                          <option value="Mild">Mild</option>
+                          <option value="Medium">Medium</option>
+                          <option value="Serious">Serious</option>
+                        </select>
+                      </div>
                     </div>
                     <div className="mt-4 flex justify-center">
-                      <button type="submit" className="rounded-lg btn btn-solid-primary">Edit</button>
+                      <button type="submit" id={reports._id} className="rounded-lg btn btn-solid-primary">Edit</button>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
-            <button className="btn btn-solid-error p-4 rounded-md">Delete</button>
+            <label className="btn btn-solid-error p-4 rounded-md" htmlFor="modal-3">Delete</label>
+            <input className="modal-state" id="modal-3" type="checkbox" />
+            <div className="modal w-screen">
+              <label className="modal-overlay" htmlFor="modal-3"></label>
+              <div className="modal-content flex flex-col gap-5 max-w-3xl">
+                <label htmlFor="modal-3" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
+                <h2 className="text-xl text-red-500 font-bold flex justify-center">Are you sure?</h2>
+                <span>If you accept, it will be gone forever ☠️</span>
+                <div className="flex justify-end gap-3">
+                  <button className="rounded-lg btn btn-solid-error">Delete</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center gap-3">
