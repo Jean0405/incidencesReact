@@ -11,7 +11,7 @@ import { validateToken } from "../jwt/tokens.js";
 const v1Routes = Router();
 
 v1Routes.use("/reports", validateToken, v1Reports)
-v1Routes.use("/campers", v1Campers)
+v1Routes.use("/campers", validateToken,v1Campers)
 v1Routes.use("/trainers", validateToken, v1Trainers)
 v1Routes.use("/supports", validateToken, v1Supports)
 v1Routes.use("/auth", v1Auth);
