@@ -28,7 +28,7 @@ export const Cards = (props) => {
 
 
   return (
-    <div id={reports._id} className="w-full rounded bg-zinc-200/10">
+    <div id={reports._id} className="card-container w-full rounded bg-zinc-200/10">
       <div className="card-body text-center">
         <div className='flex justify-between items-center'>
           <span className="text-blue-500">{reports.camper.username}</span>

@@ -1,11 +1,15 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react"
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import 'animate.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Navbar } from "../Navbar";
+
+import LottieAnimation from "lottie-react";
+import astronautAnimation from "../../assets/animation_ln37lp2p.json"
+import 'react-toastify/dist/ReactToastify.css';
+import 'animate.css';
+
 
 export const CamperPage = () => {
   const location = useLocation();
@@ -15,7 +19,6 @@ export const CamperPage = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-
   const [visibility, setVisibility] = useState(false);
 
 
@@ -36,6 +39,7 @@ export const CamperPage = () => {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem("token")
       },
       body: JSON.stringify(data)
     })).json();
@@ -59,14 +63,22 @@ export const CamperPage = () => {
     }
   }
 
-
   return (
     <div className="h-screen bg-zinc-950 pb-5">
       {/* NAVBAR */}
       <Navbar user={user} />
       {/* USER WELCOME */}
-      <div>
-        <h1 className="text-4xl font-bold text-center pt-3">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
+      <div className="pt-10">
+        <h1 className="text-4xl font-bold text-center">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
+      </div>
+
+      <div className={!visibility ? "grid place-items-center animate__animated animate__zoomIn" : "grid place-items-center mx-5 hidden"}>
+        <LottieAnimation
+          animationData={astronautAnimation}
+          loop={true}
+          width="100%"
+          height="100%"
+        />
       </div>
       {/* FORM */}
       <button className='btn btn-solid-success fixed bottom-4 right-4 p-6 z-50' onClick={() => setVisibility(!visibility)}><FontAwesomeIcon icon={faPlus} /></button>
