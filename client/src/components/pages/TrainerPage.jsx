@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useLocation } from "react-router-dom";
 import { Navbar } from '../Navbar'
 import { Cards } from '../Cards'
+import LottieAnimation from "lottie-react";
+import astronautAnimation from "../../assets/animation_ln530tdm.json"
 
 export const TrainerPage = () => {
   const location = useLocation();
@@ -67,7 +69,7 @@ export const TrainerPage = () => {
         <h1 className="text-4xl font-bold text-center pt-5">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
       </div>
       {/* FILTERS */}
-      <div className='grid place-items-center px-5 gap-5 grid-cols-1 md:grid-cols-2 mt-5'>
+      <div className='grid place-items-center px-5 gap-5 grid-cols-1 md:grid-cols-2 mt-5 pb-10'>
         {/* USERNAME FILTER */}
         <form className='flex self-start gap-2' onSubmit={getIncidentByUsername}>
           <input type='text' name="username" value={username} onChange={(e) => setUsername(e.target.value)} className="input input-solid" placeholder="Username" />
@@ -126,11 +128,22 @@ export const TrainerPage = () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto p-5 grid max-2xl gap-x-5 gap-y-5 md:grid-cols-2 sm:mx-0 lg:max-w-none lg:grid-cols-3">
+      <div className={reports.length == 0 ? "mx-auto p-5 grid grid-cols-1 max-2xl gap-x-5 gap-y-5 sm:mx-0 lg:max-w-none": "mx-auto p-5 grid max-2xl gap-x-5 gap-y-5 md:grid-cols-2 sm:mx-0 lg:max-w-none lg:grid-cols-3"}>
         {/* CARDS */}
-        {reports.map((report) => (
-          <Cards key={report._id} reportData={report} />
-        ))}
+        {reports.length==0 ? (
+          <div className="grid place-items-center animate__animated animate__zoomIn">
+          <LottieAnimation
+            animationData={astronautAnimation}
+            loop={true}
+            width="100%"
+            height="100%"
+          />
+        </div>
+        ):(
+          reports.map((report) => (
+            <Cards key={report._id} reportData={report} />
+          ))
+        )}
       </div>
     </div>
   )
