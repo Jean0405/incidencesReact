@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare,faTrash } from '@fortawesome/free-solid-svg-icons'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Cards = (props) => {
 
   const [reports, setReports] = useState(props.reportData);
   const [severity, setSeverity] = useState(reports.severity);
+  const [update, setUpdate]= useState(false);
 
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -27,12 +30,42 @@ export const Cards = (props) => {
   }
 
   const deleteIncident = async()=>{
-    // let response = await(await fetch(`http://127.25.25.26:3300/v1/reports/id=${reports._id}`,{
-    //   method:"DELETE",
-    //   Authorization: localStorage.getItem("token")
-    // })).json()
-    console.log(reports._id);
+    let response = await(await fetch(`http://127.25.25.26:3300/v1/reports/id=${reports._id}`,{
+      method:"DELETE",
+      headers:{
+        "Authorization": localStorage.getItem("token")
+      }
+    })).json()
+    if (response.status == 200) {
+     
+      toast.success('The report was deleted', {
+        position: "bottom-right",
+        autoClose: 900,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 900);
+    }else{
+      console.log(response);
+      toast.error('Error deleting report', {
+        position: "bottom-right",
+        autoClose: 900,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }
   }
+
 
   return (
     <div id={reports._id} className="card-container w-full rounded bg-zinc-200/10">
@@ -109,6 +142,7 @@ export const Cards = (props) => {
           <span className="badge badge-flat-primary text-blue-400">{capitalizeFirstLetter(reports.category)}</span>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   )
 }

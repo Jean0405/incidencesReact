@@ -8,5 +8,6 @@ v1Reports
   .get("/status=:status", reportControllers.getReportByStatus)
   .get("/severity=:severity", reportControllers.getReportBySeverity)
   .get("/user=:username", reportControllers.getReportByUsername)
+  .delete("/id=:id", reportControllers.deleteReportById);
 
 export default v1Reports;

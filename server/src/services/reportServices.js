@@ -53,3 +53,12 @@ export const getReportsByUsername = async (username) => {
   return camper;
 };
 
+/**
+ * *DELETE REPORTS BY ID
+ */
+export const deleteReportById = async (reportId) => {
+  let db = await connDB();
+  let collection = db.collection("reports");
+  await collection.deleteOne({ _id: new ObjectId(reportId) })
+  return;
+};
