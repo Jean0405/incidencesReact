@@ -63,7 +63,7 @@ export const TrainerPage = () => {
 
 
   return (
-    <div className='h-screen bg-zinc-950'>
+    <div className='h-full bg-zinc-950'>
       <Navbar user={user} />
       <div>
         <h1 className="text-4xl font-bold text-center pt-5">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
@@ -141,7 +141,7 @@ export const TrainerPage = () => {
         </div>
         ):(
           reports.map((report) => (
-            <Cards key={report._id} reportData={report} />
+            <Cards key={report._id} reportData={report} user={user}/>
           ))
         )}
       </div>

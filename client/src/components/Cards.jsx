@@ -4,11 +4,21 @@ import { faPenToSquare,faTrash } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const Cards = (props) => {
 
-  const [reports, setReports] = useState(props.reportData);
-  const [severity, setSeverity] = useState(reports.severity);
-  const [update, setUpdate]= useState(false);
+export const Cards = ({reportData,user}) => {
+  const [reports, setReports] = useState(reportData);
+  // const [supports, setSupports] = useState([])
+  const [severity, setSeverity] = useState(reportData.severity);
+
+
+  // useEffect(async()=>{
+  //   // let response = await(await fetch(`http://127.25.25.26:3300/v1/reports/id=${reports._id}`,{
+  //   //   method:"DELETE",
+  //   //   headers:{
+  //   //     "Authorization": localStorage.getItem("token")
+  //   //   }
+  //   // })).json()
+  // },[])
 
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -37,7 +47,6 @@ export const Cards = (props) => {
       }
     })).json()
     if (response.status == 200) {
-     
       toast.success('The report was deleted', {
         position: "bottom-right",
         autoClose: 900,
@@ -50,7 +59,7 @@ export const Cards = (props) => {
         });
         setTimeout(() => {
           window.location.reload();
-        }, 900);
+        }, 1100);
     }else{
       console.log(response);
       toast.error('Error deleting report', {
@@ -66,6 +75,30 @@ export const Cards = (props) => {
     }
   }
 
+  const editReport = async(e)=>{
+    e.preventDefault()
+    // let response = await(await fetch(`http://127.25.25.26:3300/v1/trainers/report/id=${reports._id}`,{
+    //   method:"DELETE",
+    //   headers:{
+    //     "Authorization": localStorage.getItem("token")
+    //   },
+    //   body:JSON.stringify({
+    //     severity: severity,
+    //     trainer: {
+    //       _id: user._id,
+    //       username: user.username,
+    //     },
+    //   })
+    // })).json()
+    console.log({
+      severity: severity,
+      trainer:{
+        _id:user._id,
+        username: user.username
+      }
+    });
+  }
+
 
   return (
     <div id={reports._id} className="card-container w-full rounded bg-zinc-200/10">
@@ -76,6 +109,7 @@ export const Cards = (props) => {
             {/* EDIT BUTTON */}
             <label className="btn btn-solid-warning p-4 rounded-md" htmlFor={`modal-${reports._id}`}><FontAwesomeIcon icon={faPenToSquare} /></label>
             <input className="modal-state" id={`modal-${reports._id}`} type="checkbox" />
+            {/*MODAL TO EDIT REPORT*/}
             <div className="modal w-screen">
               <label className="modal-overlay" htmlFor={`modal-${reports._id}`}></label>
               <div className="modal-content flex flex-col gap-5 max-w-3xl w-screen">
@@ -88,8 +122,9 @@ export const Cards = (props) => {
                 </div>
                 <p className='text-center '>{capitalizeFirstLetter(reports.description)}</p>
                 <div className="shadow-lg">
-                  <form className="space-y-4">
+                  <form className="space-y-4" onSubmit={editReport}>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 max-w-full">
+                      {/* SELECT SEVERITY */}
                       <div className="flex flex-col justify-center items-center">
                         <p className="font-bold text-sky-600">Assign severity</p>
                         <select value={severity} onChange={(e) => setSeverity(e.target.value)} className="select select-solid-primary max-w-full mt-1" required>
@@ -98,17 +133,16 @@ export const Cards = (props) => {
                           <option value="Serious">Serious</option>
                         </select>
                       </div>
-                    </div>
-                    {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 max-w-full">
-                      <div className="flex flex-col justify-center items-center">
+                      {/* SELECT SUPPORT */}
+                      {/* <div className="flex flex-col justify-center items-center">
                         <p className="font-bold text-sky-600">Assign support</p>
                         <select value={severity} onChange={(e) => setSeverity(e.target.value)} className="select select-solid-primary max-w-full mt-1" required>
                           <option value="Mild">Mild</option>
                           <option value="Medium">Medium</option>
                           <option value="Serious">Serious</option>
                         </select>
-                      </div>
-                    </div> */}
+                      </div> */}
+                    </div>
                     <div className="mt-4 flex justify-center">
                       <button type="submit" id={`${reports._id}`} className="rounded-lg btn btn-solid-warning"><FontAwesomeIcon icon={faPenToSquare} /></button>
                     </div>

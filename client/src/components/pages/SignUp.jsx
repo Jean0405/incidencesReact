@@ -3,14 +3,15 @@ import { useState } from "react";
 import LottieAnimation from "lottie-react";
 import astronautAnimation from "../../assets/animation_ln37lp2p.json"
 
-export const SignIn = () => {
+export const SignUp = () => {
   let redirect = useNavigate()
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("")
 
   //API REQUEST
-  const signIn = async (event) => {
+  const SignUp = async (event) => {
     event.preventDefault();
 
     let response = await (await fetch("http://127.25.25.26:3300/v1/auth/signIn", {
@@ -52,11 +53,11 @@ export const SignIn = () => {
         />
       </div>
       <form
-        onSubmit={signIn}
+        onSubmit={SignUp}
         id="formSignIn"
         className="h-screen flex flex-col justify-center items-center gap-3 p-2"
       >
-        <h1 className="text-center font-bold pt-3">SIGN IN</h1>
+        <h1 className="text-center font-bold pt-3">SIGN UP</h1>
         <input
           name="username"
           value={username}
@@ -81,8 +82,8 @@ export const SignIn = () => {
 
           <p className="mt-5 gap-x-2 text-center text-sm text-gray-500">
             Not a member?
-            <Link to="/signUp" className="p-2 text-blue-400 font-bold">
-              Sign Up
+            <Link to="/" className="p-2 text-blue-400 font-bold">
+              Sign In
             </Link>
           </p>
         </div>

@@ -64,7 +64,7 @@ export const CamperPage = () => {
   }
 
   return (
-    <div className="h-screen bg-zinc-950 pb-5">
+    <div className="h-screen bg-zinc-950">
       {/* NAVBAR */}
       <Navbar user={user} />
       {/* USER WELCOME */}
@@ -72,7 +72,7 @@ export const CamperPage = () => {
         <h1 className="text-4xl font-bold text-center">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
       </div>
 
-      <div className={!visibility ? "grid place-items-center animate__animated animate__zoomIn" : "grid place-items-center mx-5 hidden"}>
+      <div className={!visibility ? "grid place-items-center animate__animated animate__zoomIn" : "hidden"}>
         <LottieAnimation
           animationData={astronautAnimation}
           loop={true}
