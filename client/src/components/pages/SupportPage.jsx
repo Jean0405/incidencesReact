@@ -32,7 +32,7 @@ export const SupportPage = () => {
       </div>
        <div className={reportList.length == 0 ? "mx-auto p-5 grid grid-cols-1 max-2xl gap-x-5 gap-y-5 sm:mx-0 lg:max-w-none": "mx-auto p-5 grid max-2xl gap-x-5 gap-y-5 md:grid-cols-2 sm:mx-0 lg:max-w-none lg:grid-cols-3"}>
         {/* CARDS */}
-        {reportList.length==0 ? (
+        {reportList.length == 0 ? (
           <div className="grid place-items-center animate__animated animate__zoomIn">
           <LottieAnimation
             animationData={astronautAnimation}
