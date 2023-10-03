@@ -37,6 +37,12 @@ export const SignIn = () => {
             user: response.user[0]
           }
         })
+      }else if (response.user[0].role == "support") {
+        redirect("/supportPage", {
+          state: {
+            user: response.user[0]
+          }
+        })
       }
     }
   };

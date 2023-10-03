@@ -14,9 +14,9 @@ export const Navbar = (props) => {
   let username = capitalizeFirstLetter(props.user.username);
 
   return (
-    <div className="navbar sm:w-full md:1/2">
+    <div className="navbar bg-blue-500 sm:w-full md:1/2">
       <div className="navbar-start">
-        <a className="hidden sm:block md:block lg:block navbar-item font-bold text-primary">CAMPUSLANDS</a>
+        <a className="hidden sm:block md:block lg:block navbar-item font-bold text-white">CAMPUSLANDS</a>
       </div>
       <div className="navbar-end">
         <a className="navbar-item">{role}</a>
