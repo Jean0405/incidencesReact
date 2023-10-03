@@ -190,7 +190,7 @@ export const Cards = ({reportData,user}) => {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center gap-3">
-          <h2 className="card-header justify-center">{reports.title.toUpperCase()}</h2>
+          <h2 className="card-header justify-center text-white">{reports.title.toUpperCase()}</h2>
         </div>
         <h4 className='font-bold text-blue-500'>{reports.ubication.toUpperCase()}</h4>
         <p className="text-content2">{capitalizeFirstLetter(reports.description)}</p>

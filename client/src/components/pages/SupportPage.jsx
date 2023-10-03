@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { Navbar } from '../Navbar';
 import { useEffect, useState } from 'react';
-import { Cards } from '../Cards';
+import { CardsSupport } from '../CardsSupport';
 import LottieAnimation from "lottie-react";
 import astronautAnimation from "../../assets/animation_ln530tdm.json"
 
@@ -25,7 +25,7 @@ export const SupportPage = () => {
   },[])
 
   return (
-    <div>
+    <div className='bg-zinc-950'>
        <Navbar user={user} />
        <div>
         <h1 className="text-4xl font-bold text-center pt-5">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
@@ -43,7 +43,7 @@ export const SupportPage = () => {
         </div>
         ):(
           reportList.map((report) => (
-            <Cards key={report._id} reportData={report} user={user}/>
+            <CardsSupport key={report._id} reportData={report} user={user}/>
           ))
         )}
       </div>
