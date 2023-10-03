@@ -128,20 +128,20 @@ export const TrainerPage = () => {
           </div>
         </div>
       </div>
-      <div className={reports.length == 0 ? "mx-auto p-5 grid grid-cols-1 max-2xl gap-x-5 gap-y-5 sm:mx-0 lg:max-w-none": "mx-auto p-5 grid max-2xl gap-x-5 gap-y-5 md:grid-cols-2 sm:mx-0 lg:max-w-none lg:grid-cols-3"}>
+      <div className={reports.length == 0 ? "mx-auto p-5 grid grid-cols-1 max-2xl gap-x-5 gap-y-5 sm:mx-0 lg:max-w-none" : "mx-auto p-5 grid max-2xl gap-x-5 gap-y-5 md:grid-cols-2 sm:mx-0 lg:max-w-none lg:grid-cols-3"}>
         {/* CARDS */}
-        {reports.length==0 ? (
+        {reports.length == 0 ? (
           <div className="grid place-items-center animate__animated animate__zoomIn">
-          <LottieAnimation
-            animationData={astronautAnimation}
-            loop={true}
-            width="100%"
-            height="100%"
-          />
-        </div>
-        ):(
+            <LottieAnimation
+              animationData={astronautAnimation}
+              loop={true}
+              width="100%"
+              height="100%"
+            />
+          </div>
+        ) : (
           reports.map((report) => (
-            <Cards key={report._id} reportData={report} user={user}/>
+            <Cards key={report._id} id={report._id} setReports={setReports} reportData={report} user={user} reportss={reports} />
           ))
         )}
       </div>

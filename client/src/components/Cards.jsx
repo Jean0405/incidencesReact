@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare,faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export const Cards = ({reportData,user}) => {
+export const Cards = ({ reportData, user, setReports, id, reportss }) => {
   const reports = reportData;
   const [supportsList, setSupportsList] = useState([])
   const [support, setSupport] = useState({})
   const [severity, setSeverity] = useState(reportData.severity);
 
-  const getAllSupports = async()=>{
+  const getAllSupports = async () => {
     const response = await (await fetch(`http://127.25.25.26:3300/v1/supports`, {
       method: "GET",
       headers: {
@@ -20,9 +20,9 @@ export const Cards = ({reportData,user}) => {
     })).json();
     setSupportsList(response.user)
   }
-  useEffect(()=>{
+  useEffect(() => {
     getAllSupports()
-  },[])
+  }, [])
 
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -43,10 +43,10 @@ export const Cards = ({reportData,user}) => {
     );
   }
 
-  const deleteIncident = async()=>{
-    let response = await(await fetch(`http://127.25.25.26:3300/v1/reports/id=${reports._id}`,{
-      method:"DELETE",
-      headers:{
+  const deleteIncident = async () => {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/reports/id=${reports._id}`, {
+      method: "DELETE",
+      headers: {
         "Authorization": localStorage.getItem("token")
       }
     })).json()
@@ -60,11 +60,12 @@ export const Cards = ({reportData,user}) => {
         draggable: false,
         progress: undefined,
         theme: "dark",
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1100);
-    }else{
+      });
+      console.log("🚀 ~ file: Cards.jsx:65 ~ deleteIncident ~ reportData:", reportData)
+      let newArray = reportss.filter(el => el._id != id);
+      console.log("🚀 ~ file: Cards.jsx:65 ~ deleteIncident ~ newArray:", newArray)
+      setReports(newArray);
+    } else {
       console.log(response);
       toast.error('Error deleting report', {
         position: "bottom-right",
@@ -75,42 +76,66 @@ export const Cards = ({reportData,user}) => {
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
+      });
     }
   }
 
-  const editReport = async(e)=>{
+  const editReport = async (e) => {
     e.preventDefault()
-    let response = await(await fetch(`http://127.25.25.26:3300/v1/trainers/report/id=${reports._id}`,{
-      method:"PUT",
-      headers:{
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/trainers/report/id=${reports._id}`, {
+      method: "PUT",
+      headers: {
         'Content-Type': 'application/json',
         "Authorization": localStorage.getItem("token")
       },
-      body:JSON.stringify({
+      body: JSON.stringify({
         severity: severity,
         trainer: {
           _id: user._id,
           username: user.username,
         },
-        support:{
+        support: {
           _id: support._id,
           username: support.username
         }
       })
     })).json()
-    console.log(response);
-    console.log({
-      severity: severity,
-      trainer: {
-        _id: user._id,
-        username: user.username,
-      },
-      support:{
-        _id: support._id,
-        username: support.username
-      }
-    });
+    if (response.status == 200) {
+      toast.success('The report was updated', {
+        position: "bottom-right",
+        autoClose: 900,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      console.log(response);
+      toast.error('Error updating report', {
+        position: "bottom-right",
+        autoClose: 900,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+    // console.log(response);
+    // console.log({
+    //   severity: severity,
+    //   trainer: {
+    //     _id: user._id,
+    //     username: user.username,
+    //   },
+    //   support: {
+    //     _id: support._id,
+    //     username: support.username
+    //   }
+    // });
   }
 
 
@@ -150,17 +175,17 @@ export const Cards = ({reportData,user}) => {
                       {/* SELECT SUPPORT */}
                       <div className="flex flex-col justify-center items-center">
                         <p className="font-bold text-sky-600">Assign support</p>
-                        <select value={support} onChange={(e)=>{
+                        <select onChange={(e) => {
                           const selectedOption = e.target.options[e.target.selectedIndex];
                           const selectedId = selectedOption.value;
                           const selectedUsername = selectedOption.text;
                           setSupport({
                             _id: selectedId,
-                            username:selectedUsername
+                            username: selectedUsername
                           });
                         }} className="select select-solid-primary max-w-full mt-1" required>
                           {
-                            supportsList.map(support=>(                             
+                            supportsList.map(support => (
                               <option key={support._id} id={support._id} value={support._id}>{support.username}</option>
                             ))
                           }
@@ -200,7 +225,7 @@ export const Cards = ({reportData,user}) => {
           <span className="badge badge-flat-primary text-blue-400">{capitalizeFirstLetter(reports.category)}</span>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   )
 }
