@@ -27,7 +27,10 @@ export const Navbar = (props) => {
                 <div className="font-bold">{username[0]}</div>
               </label>
               <div className="dropdown-menu dropdown-menu-bottom-left">
-                <Link to="/" onClick={handleLogOut} className="dropdown-item text-sm">Log Out</Link>
+                <span className='dropdown-item text-sm font-bold'>{props.user.username}</span>
+                <span className='dropdown-item text-sm'>{props.user.email}</span>
+                <div className='divider'></div>
+                <Link to="/" onClick={handleLogOut} className="dropdown-item text-sm bg-blue-600 text-center hover:bg-blue-800">Log Out</Link>
               </div>
             </div>
           </div>

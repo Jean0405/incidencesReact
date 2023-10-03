@@ -6,19 +6,23 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export const Cards = ({reportData,user}) => {
-  const [reports, setReports] = useState(reportData);
-  // const [supports, setSupports] = useState([])
+  const reports = reportData;
+  const [supportsList, setSupportsList] = useState([])
+  const [support, setSupport] = useState({})
   const [severity, setSeverity] = useState(reportData.severity);
 
-
-  // useEffect(async()=>{
-  //   // let response = await(await fetch(`http://127.25.25.26:3300/v1/reports/id=${reports._id}`,{
-  //   //   method:"DELETE",
-  //   //   headers:{
-  //   //     "Authorization": localStorage.getItem("token")
-  //   //   }
-  //   // })).json()
-  // },[])
+  const getAllSupports = async()=>{
+    const response = await (await fetch(`http://127.25.25.26:3300/v1/supports`, {
+      method: "GET",
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      }
+    })).json();
+    setSupportsList(response.user)
+  }
+  useEffect(()=>{
+    getAllSupports()
+  },[])
 
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -77,24 +81,34 @@ export const Cards = ({reportData,user}) => {
 
   const editReport = async(e)=>{
     e.preventDefault()
-    // let response = await(await fetch(`http://127.25.25.26:3300/v1/trainers/report/id=${reports._id}`,{
-    //   method:"DELETE",
-    //   headers:{
-    //     "Authorization": localStorage.getItem("token")
-    //   },
-    //   body:JSON.stringify({
-    //     severity: severity,
-    //     trainer: {
-    //       _id: user._id,
-    //       username: user.username,
-    //     },
-    //   })
-    // })).json()
+    let response = await(await fetch(`http://127.25.25.26:3300/v1/trainers/report/id=${reports._id}`,{
+      method:"PUT",
+      headers:{
+        'Content-Type': 'application/json',
+        "Authorization": localStorage.getItem("token")
+      },
+      body:JSON.stringify({
+        severity: severity,
+        trainer: {
+          _id: user._id,
+          username: user.username,
+        },
+        support:{
+          _id: support._id,
+          username: support.username
+        }
+      })
+    })).json()
+    console.log(response);
     console.log({
       severity: severity,
-      trainer:{
-        _id:user._id,
-        username: user.username
+      trainer: {
+        _id: user._id,
+        username: user.username,
+      },
+      support:{
+        _id: support._id,
+        username: support.username
       }
     });
   }
@@ -128,20 +142,30 @@ export const Cards = ({reportData,user}) => {
                       <div className="flex flex-col justify-center items-center">
                         <p className="font-bold text-sky-600">Assign severity</p>
                         <select value={severity} onChange={(e) => setSeverity(e.target.value)} className="select select-solid-primary max-w-full mt-1" required>
-                          <option value="Mild">Mild</option>
-                          <option value="Medium">Medium</option>
-                          <option value="Serious">Serious</option>
+                          <option value="mild">Mild</option>
+                          <option value="medium">Medium</option>
+                          <option value="serious">Serious</option>
                         </select>
                       </div>
                       {/* SELECT SUPPORT */}
-                      {/* <div className="flex flex-col justify-center items-center">
+                      <div className="flex flex-col justify-center items-center">
                         <p className="font-bold text-sky-600">Assign support</p>
-                        <select value={severity} onChange={(e) => setSeverity(e.target.value)} className="select select-solid-primary max-w-full mt-1" required>
-                          <option value="Mild">Mild</option>
-                          <option value="Medium">Medium</option>
-                          <option value="Serious">Serious</option>
+                        <select value={support} onChange={(e)=>{
+                          const selectedOption = e.target.options[e.target.selectedIndex];
+                          const selectedId = selectedOption.value;
+                          const selectedUsername = selectedOption.text;
+                          setSupport({
+                            _id: selectedId,
+                            username:selectedUsername
+                          });
+                        }} className="select select-solid-primary max-w-full mt-1" required>
+                          {
+                            supportsList.map(support=>(                             
+                              <option key={support._id} id={support._id} value={support._id}>{support.username}</option>
+                            ))
+                          }
                         </select>
-                      </div> */}
+                      </div>
                     </div>
                     <div className="mt-4 flex justify-center">
                       <button type="submit" id={`${reports._id}`} className="rounded-lg btn btn-solid-warning"><FontAwesomeIcon icon={faPenToSquare} /></button>
