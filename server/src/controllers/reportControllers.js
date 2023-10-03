@@ -71,6 +71,7 @@ export const getReportByUsername = async (req, res) => {
       res.status(404).json({
         status: 404,
         message: "THE USER HAS NOT REPORTS",
+        data: data
       });
     else
       res.status(200).json({
