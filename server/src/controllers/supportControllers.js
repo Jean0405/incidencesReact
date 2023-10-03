@@ -8,7 +8,7 @@ export const putReportBySupport = async (req, res) => {
     await supportServices.putReportBySupport({
       _id: req.params.id,
       status: req.body.status,
-      diagnosis: req.body.diagnosis
+      diagnosis: req.body.diagnosis,
     });
     res
       .status(200)
@@ -22,3 +22,22 @@ export const putReportBySupport = async (req, res) => {
   }
 };
 
+/**
+ * *GET ALL SUPPORTS
+ */
+export const getAllSupports = async (req, res) => {
+  try {
+    let data = await supportServices.getAllSupports();
+    res.status(200).json({
+      status: 200,
+      message: "REPORT SUCCESSFULLY OBTAINED",
+      user: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      message: "ERROR GETTING THE REPORTS",
+      errorInfo: error.message,
+    });
+  }
+};

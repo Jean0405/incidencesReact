@@ -8,6 +8,7 @@ export const putReportByTrainer = async (info) => {
   let db = await connDB();
   let collection = db.collection("reports");
 
+  console.log(info);
   const filter = {
     _id: new ObjectId(info._id),
   };
