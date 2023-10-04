@@ -17,15 +17,17 @@ export const SupportPage = () => {
         Authorization: localStorage.getItem("token")
       }
     })).json();
-    console.log(response);
     setReportList(response.data)
   }
   useEffect(() => {
     getReportsBySupport();
   }, [])
 
+  useEffect(() => {
+    getReportsBySupport();
+  }, [reportList])
   return (
-    <div className='bg-zinc-950'>
+    <div className=''>
       <Navbar user={user} />
       <div>
         <h1 className="text-4xl font-bold text-center pt-5">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
@@ -43,7 +45,7 @@ export const SupportPage = () => {
           </div>
         ) : (
           reportList.map((report) => (
-            <CardsSupport key={report._id} reportData={report} setReportList={setReportList} user={user} />
+            <CardsSupport key={report._id} reportData={report} setReports={setReportList} user={user} />
           ))
         )}
       </div>

@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -9,6 +9,8 @@ import LottieAnimation from "lottie-react";
 import astronautAnimation from "../../assets/animation_ln37lp2p.json"
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
+import { Footer } from "../Footer";
+import parseDate from "../libs/parseDate";
 
 
 export const CamperPage = () => {
@@ -20,6 +22,7 @@ export const CamperPage = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [visibility, setVisibility] = useState(false);
+  const [reports, setReports] = useState([])
 
 
   let data = {
@@ -63,8 +66,36 @@ export const CamperPage = () => {
     }
   }
 
+  const getReportsByUsername = async () => {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/reports/user=${user.username}`, {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    })).json();
+    console.log(response.data);
+    setReports(response.data)
+  }
+  useEffect(() => {
+    getReportsByUsername()
+  }, []);
+
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  function borderState(state) {
+    if (state == "solved") {
+      return "grid bg-zinc-950 p-5 border-t-8 border-green-500"
+    } else if (state == "not solved") {
+      return "grid bg-zinc-950 p-5 border-t-8 border-red-500"
+    } else {
+      return "grid bg-zinc-950 p-5 border-t-8 border-blue-500"
+    }
+  }
+
   return (
-    <div className="h-screen bg-zinc-950">
+    <div className="h-full">
       {/* NAVBAR */}
       <Navbar user={user} />
       {/* USER WELCOME */}
@@ -81,7 +112,7 @@ export const CamperPage = () => {
         />
       </div>
       {/* FORM */}
-      <button className='btn btn-solid-success fixed bottom-4 right-4 p-6 z-50' onClick={() => setVisibility(!visibility)}><FontAwesomeIcon icon={faPlus} /></button>
+      <button className='btn btn-success dark:btn-solid-success fixed bottom-4 right-4 p-6 z-50' onClick={() => setVisibility(!visibility)}><FontAwesomeIcon icon={faPlus} /></button>
       <div className={visibility ? "mx-5 animate__animated animate__zoomIn" : "mx-5 hidden"}>
         <section className="bg-gray-2 m-auto rounded-x max-w-4xl mt-5 rounded-md">
           <div className="p-8 shadow-lg">
@@ -126,6 +157,18 @@ export const CamperPage = () => {
             </form>
           </div>
         </section>
+      </div>
+      <h1 className="text-center text-4xl font-bold py-5">Reports <span className="text-sky-500">you made</span></h1>
+      <div className="grid gap-5 md:gap-9 md:grid-cols-2 lg:grid-cols-3 px-5 pb-8">
+        {
+          reports.map((report, index) => (
+            <div key={index} className={borderState(report.state)}>
+              <span className="text-end text-sm text-zinc-500 font-bold pb-2">{parseDate(report.date)}</span>
+              <span className="text-center text-blue-500 font-bold">{report.title.toUpperCase()}</span>
+              <span className="text-center text-sm text-white pt-2">{report.description}</span>
+            </div>
+          ))
+        }
       </div>
       <ToastContainer />
     </div>

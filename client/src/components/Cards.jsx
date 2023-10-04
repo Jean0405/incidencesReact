@@ -18,11 +18,11 @@ export const Cards = ({ reportData, user, setReports, supportList }) => {
     let severityBagde = "badge text-muted";
 
     if (state === "not solved") {
-      severityBagde = "badge badge-flat-error text-red-500";
+      severityBagde = "badge badge-flat-error dark:text-red-500";
     } else if (state === "in process") {
-      severityBagde = "badge badge-flat-primary text-blue-500";
+      severityBagde = "badge badge-flat-primary dark:text-blue-500";
     } else {
-      severityBagde = "badge badge-flat-success text-green-500";
+      severityBagde = "badge badge-flat-success dark:text-green-500";
     }
     return (
       severityBagde
@@ -124,7 +124,7 @@ export const Cards = ({ reportData, user, setReports, supportList }) => {
   }
 
   return (
-    <div id={reports._id} className="card-container w-full rounded bg-zinc-200/10">
+    <div id={reports._id} className="card-container w-full rounded bg-zinc-950">
       <div className="card-body text-center">
         <div className='flex justify-between items-center'>
           <span className="text-blue-500">{reports.camper.username}</span>
@@ -144,7 +144,7 @@ export const Cards = ({ reportData, user, setReports, supportList }) => {
                   <span className="badge badge-flat-primary text-blue-400">{capitalizeFirstLetter(reports.category)}</span>
                 </div>
                 <p className='text-center '>{capitalizeFirstLetter(reports.description)}</p>
-                <div className="shadow-lg">
+                <div>
                   <form className="space-y-4" onSubmit={editReport}>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 max-w-full">
                       {/* SELECT SEVERITY */}

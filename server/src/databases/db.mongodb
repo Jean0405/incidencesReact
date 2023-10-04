@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 use("incidentsDB");
 db.createCollection("reports", {
   validator: {
@@ -143,3 +145,12 @@ db.reports.insertOne({
     username: "camper1",
   },
 });
+
+use("incidentsDB");
+db.reports.updateOne(
+  {_id: new ObjectId("651d2941bae619e8ee8a6221")},
+  {
+    status: "solved",
+    description: "xddd"
+  }
+)

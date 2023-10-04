@@ -85,7 +85,7 @@ export const TrainerPage = () => {
 
 
   return (
-    <div className='h-full bg-zinc-950'>
+    <div className='h-full'>
       <Navbar user={user} />
       <div>
         <h1 className="text-4xl font-bold text-center pt-5">Welcome <span className="text-sky-500">{location.state.user.username}</span></h1>
@@ -99,13 +99,13 @@ export const TrainerPage = () => {
         </form>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
           {/* SEVERITY FILTER */}
-          <div className="menu self-start w-40 bg-zinc-800 rounded-md">
+          <div className="menu self-start w-40 rounded-xl bg-zinc-200 dark:bg-zinc-950">
             <section className="menu-section">
               <ul className="menu-items">
                 <li>
                   <input type="checkbox" id="menu-1" className="menu-toggle" />
                   <label className="menu-item justify-between" htmlFor="menu-1">
-                    <span>{severity}</span>
+                    <span className='text-black dark:text-white'>{severity}</span>
                     <span className="menu-icon">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" className="w-4 h-4 stroke-content3">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -133,13 +133,13 @@ export const TrainerPage = () => {
             </section>
           </div>
           {/* STATUS FILTER */}
-          <div className="menu self-start w-40 bg-zinc-800 rounded-md">
+          <div className="menu self-start w-40 rounded-xl bg-zinc-200 dark:bg-zinc-950">
             <section className="menu-section">
               <ul className="menu-items">
                 <li>
                   <input type="checkbox" id="menu-2" className="menu-toggle" />
                   <label className="menu-item justify-between" htmlFor="menu-2">
-                    <span>{status}</span>
+                    <span className='text-black dark:text-white'>{status}</span>
                     <span className="menu-icon">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" className="w-4 h-4 stroke-content3">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
