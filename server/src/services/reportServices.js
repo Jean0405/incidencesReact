@@ -3,6 +3,17 @@ import { ObjectId } from "mongodb";
 
 
 /**
+ * *GET REPORTS
+ */
+export const getAllReports = async () => {
+  let db = await connDB();
+  let collection = db.collection("reports");
+  let data = await collection.find().toArray();
+
+  return data;
+};
+
+/**
  * *GET REPORT BY ID
  */
 export const getReportById = async (reportId) => {

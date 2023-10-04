@@ -4,7 +4,7 @@ import * as supportControllers from "../../controllers/supportControllers.js";
 const v1Supports = Router();
 
 v1Supports
+  .get("/", supportControllers.getAllSupports)
   .put("/report/id=:id", supportControllers.putReportBySupport)
-  .get("/", supportControllers.getAllSupports);
 
 export default v1Supports;

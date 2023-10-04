@@ -5,24 +5,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export const Cards = ({ reportData, user, setReports, id, reportss }) => {
+export const Cards = ({ reportData, user, setReports, supportList }) => {
   const reports = reportData;
-  const [supportsList, setSupportsList] = useState([])
-  const [support, setSupport] = useState({})
+  const [support, setSupport] = useState({});
   const [severity, setSeverity] = useState(reportData.severity);
-
-  const getAllSupports = async () => {
-    const response = await (await fetch(`http://127.25.25.26:3300/v1/supports`, {
-      method: "GET",
-      headers: {
-        "Authorization": localStorage.getItem("token")
-      }
-    })).json();
-    setSupportsList(response.user)
-  }
-  useEffect(() => {
-    getAllSupports()
-  }, [])
 
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -43,6 +29,7 @@ export const Cards = ({ reportData, user, setReports, id, reportss }) => {
     );
   }
 
+
   const deleteIncident = async () => {
     let response = await (await fetch(`http://127.25.25.26:3300/v1/reports/id=${reports._id}`, {
       method: "DELETE",
@@ -53,7 +40,7 @@ export const Cards = ({ reportData, user, setReports, id, reportss }) => {
     if (response.status == 200) {
       toast.success('The report was deleted', {
         position: "bottom-right",
-        autoClose: 900,
+        autoClose: 1300,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -61,15 +48,18 @@ export const Cards = ({ reportData, user, setReports, id, reportss }) => {
         progress: undefined,
         theme: "dark",
       });
-      console.log("🚀 ~ file: Cards.jsx:65 ~ deleteIncident ~ reportData:", reportData)
-      let newArray = reportss.filter(el => el._id != id);
-      console.log("🚀 ~ file: Cards.jsx:65 ~ deleteIncident ~ newArray:", newArray)
-      setReports(newArray);
+      let response = await (await fetch(`http://127.25.25.26:3300/v1/reports`, {
+        method: "GET",
+        headers: {
+          "Authorization": localStorage.getItem("token")
+        }
+      })).json()
+      setReports(response.data)
     } else {
       console.log(response);
       toast.error('Error deleting report', {
         position: "bottom-right",
-        autoClose: 900,
+        autoClose: 1300,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -111,6 +101,13 @@ export const Cards = ({ reportData, user, setReports, id, reportss }) => {
         progress: undefined,
         theme: "dark",
       });
+      let response = await (await fetch(`http://127.25.25.26:3300/v1/reports`, {
+        method: "GET",
+        headers: {
+          "Authorization": localStorage.getItem("token")
+        }
+      })).json()
+      setReports(response.data)
     } else {
       console.log(response);
       toast.error('Error updating report', {
@@ -124,20 +121,7 @@ export const Cards = ({ reportData, user, setReports, id, reportss }) => {
         theme: "dark",
       });
     }
-    // console.log(response);
-    // console.log({
-    //   severity: severity,
-    //   trainer: {
-    //     _id: user._id,
-    //     username: user.username,
-    //   },
-    //   support: {
-    //     _id: support._id,
-    //     username: support.username
-    //   }
-    // });
   }
-
 
   return (
     <div id={reports._id} className="card-container w-full rounded bg-zinc-200/10">
@@ -185,7 +169,7 @@ export const Cards = ({ reportData, user, setReports, id, reportss }) => {
                           });
                         }} className="select select-solid-primary max-w-full mt-1" required>
                           {
-                            supportsList.map(support => (
+                            supportList.map(support => (
                               <option key={support._id} id={support._id} value={support._id}>{support.username}</option>
                             ))
                           }
@@ -199,6 +183,7 @@ export const Cards = ({ reportData, user, setReports, id, reportss }) => {
                 </div>
               </div>
             </div>
+            {/* DELETE REPORT */}
             <label className="btn btn-solid-error p-4 rounded-md" htmlFor={`modal-${reports._id}-1`}><FontAwesomeIcon icon={faTrash} /></label>
             <input className="modal-state" id={`modal-${reports._id}-1`} type="checkbox" />
             <div className="modal w-screen">

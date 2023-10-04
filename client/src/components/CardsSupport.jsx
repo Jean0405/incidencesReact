@@ -6,10 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-export const CardsSupport = ({reportData,user}) => {
+export const CardsSupport = ({ reportData, setReportList, user }) => {
   const reports = reportData;
   const [state, setState] = useState("");
-  const [description, setDescription] = useState("");
+  const [diagnosis, setDiagnosis] = useState("");
 
 
   function capitalizeFirstLetter(str) {
@@ -31,18 +31,22 @@ export const CardsSupport = ({reportData,user}) => {
     );
   }
 
-  const editReport = async()=>{
+  const editReport = async (e) => {
     e.preventDefault()
-    // let response = await(await fetch(`http://127.25.25.26:3300/v1/trainers/report/id=${reports._id}`,{
-    //   method:"PUT",
-    //   headers:{
-    //     'Content-Type': 'application/json',
-    //     "Authorization": localStorage.getItem("token")
-    //   },
-    //   body:JSON.stringify()
-    // })).json()
-
-    console.log(state, description);
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/supports/report/id=${reports._id}`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": localStorage.getItem("token")
+      },
+      body: JSON.stringify({
+        status: state,
+        diagnosis: diagnosis
+      })
+    })).json()
+    console.log(response);
+    setState("")
+    setDiagnosis("")
   }
 
 
@@ -66,26 +70,26 @@ export const CardsSupport = ({reportData,user}) => {
                   <span className={stateBadge(reports.state)}>{capitalizeFirstLetter(reports.state)}</span>
                   <span className="badge badge-flat-primary text-blue-400">{capitalizeFirstLetter(reports.category)}</span>
                 </div>
-                <p className='text-center'>{capitalizeFirstLetter(reports.description)}</p> 
+                <p className='text-center'>{capitalizeFirstLetter(reports.description)}</p>
                 <form className='space-y-4' onSubmit={editReport}>
-                    {/* SELECT STATUS */}
-                      <div className="flex flex-col justify-center items-center">
-                        <p className="font-bold text-sky-600 pb-2">Assign severity</p>
-                        <select value={state} onChange={(e) => setState(e.target.value)} className="select select-solid-primary max-w-full mt-1" required>
-                          <option value="solved">Solved</option>
-                          <option value="in progress">In progress</option>
-                          <option value="not solved">Not solved</option>
-                        </select>
-                      </div>
-                    {/* TEXT FIELD */}  
-                    <p className="font-bold text-center text-sky-600">Diagnosis</p>
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} className='w-full p-2' name="" id="" cols="30" rows="5" placeholder='Write your diagnosis' required></textarea>
-                    <div className='grid place-items-center'>
-                        <button type="submit" className='btn btn-solid-warning'>Edit</button>
-                    </div>
-                </form>               
+                  {/* SELECT STATUS */}
+                  <div className="flex flex-col justify-center items-center">
+                    <p className="font-bold text-sky-600 pb-2">Assign severity</p>
+                    <select value={state} onChange={(e) => setState(e.target.value)} className="select select-solid-primary max-w-full mt-1" required>
+                      <option value="solved">Solved</option>
+                      <option value="in progress">In progress</option>
+                      <option value="not solved">Not solved</option>
+                    </select>
+                  </div>
+                  {/* TEXT FIELD */}
+                  <p className="font-bold text-center text-sky-600">Diagnosis</p>
+                  <textarea value={diagnosis} onChange={(e) => setDiagnosis(e.target.value)} className='w-full p-2' name="" id="" cols="30" rows="5" placeholder='Write your diagnosis' required></textarea>
+                  <div className='grid place-items-center'>
+                    <button type="submit" className='btn btn-solid-warning'>Edit</button>
+                  </div>
+                </form>
               </div>
-            </div>  
+            </div>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center gap-3">

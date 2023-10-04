@@ -13,10 +13,38 @@ export const TrainerPage = () => {
   const [status, setStatus] = useState("Not solved")
   const [severity, setSeverity] = useState("Mild")
   const [reports, setReports] = useState([])
+  const [supportList, setSupportsList] = useState([]);
 
-  //FETCH REPORTS BY STATUS
-  async function getIncidents() {
-    const response = await (await fetch(`http://127.25.25.26:3300/v1/reports/status=${status.toLowerCase()}`, {
+  //GET ALL REPORTS
+  const getAllReports = async () => {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/reports`, {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    })).json()
+    setReports(response.data)
+  }
+
+  //GET ALL SUPPORT USERS
+  const getAllSupports = async () => {
+    const response = await (await fetch(`http://127.25.25.26:3300/v1/supports`, {
+      method: "GET",
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      }
+    })).json();
+    setSupportsList(response.user)
+  }
+
+  useEffect(() => {
+    getAllReports();
+    getAllSupports();
+  }, [])
+
+  //GET REPORTS BY STATUS
+  const getReportByStatus = async (option) => {
+    const response = await (await fetch(`http://127.25.25.26:3300/v1/reports/status=${option.toLowerCase()}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -26,14 +54,25 @@ export const TrainerPage = () => {
     setReports(response.data)
     return;
   }
-  useEffect(() => {
-    getIncidents()
-  }, [status])
 
-  //FETCH REPORTS BY USERNAME
+
+  //GET REPORTS BY SEVERITY
+  const getReportsBySeverity = async (option) => {
+    const response = await (await fetch(`http://127.25.25.26:3300/v1/reports/severity=${option.toLowerCase()}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem("token")
+      }
+    })).json();
+    setReports(response.data)
+    return;
+  }
+
+  //GET REPORTS BY USERNAME
   const getIncidentByUsername = async (event) => {
     event.preventDefault();
-    let res = await (await fetch(`http://127.25.25.26:3300/v1/reports/user=${username}`, {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/reports/user=${username}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -41,25 +80,8 @@ export const TrainerPage = () => {
       }
     })).json()
     setUsername("")
-    setReports(res.data)
-  }
-
-  //FETCH REPORTS BY SEVERITY
-  async function getIncidentBySeverity() {
-    const response = await (await fetch(`http://127.25.25.26:3300/v1/reports/severity=${severity.toLowerCase()}`, {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem("token")
-      }
-    })).json();
     setReports(response.data)
-    return;
   }
-  useEffect(() => {
-    getIncidentBySeverity()
-  }, [severity])
-
 
 
   return (
@@ -92,9 +114,18 @@ export const TrainerPage = () => {
                   </label>
                   <div className="menu-item-collapse">
                     <div className="min-h-0">
-                      <label className="menu-item" onClick={() => setSeverity("Mild")}>Mild</label>
-                      <label className="menu-item" onClick={() => setSeverity("Medium")}>Medium</label>
-                      <label className="menu-item" onClick={() => setSeverity("Serious")}>Serious</label>
+                      <label className="menu-item" onClick={() => {
+                        setSeverity("Mild")
+                        getReportsBySeverity("Mild")
+                      }}>Mild</label>
+                      <label className="menu-item" onClick={() => {
+                        setSeverity("Medium")
+                        getReportsBySeverity("Medium")
+                      }}>Medium</label>
+                      <label className="menu-item" onClick={() => {
+                        setSeverity("Serious")
+                        getReportsBySeverity("Serious")
+                      }}>Serious</label>
                     </div>
                   </div>
                 </li>
@@ -117,9 +148,18 @@ export const TrainerPage = () => {
                   </label>
                   <div className="menu-item-collapse">
                     <div className="min-h-0">
-                      <label className="menu-item" onClick={() => setStatus("Not solved")}>Not Solved</label>
-                      <label className="menu-item" onClick={() => setStatus("In process")}>In process</label>
-                      <label className="menu-item" onClick={() => setStatus("Solved")}>Solved</label>
+                      <label className="menu-item" onClick={() => {
+                        setStatus("Not solved")
+                        getReportByStatus("Not solved")
+                      }}>Not Solved</label>
+                      <label className="menu-item" onClick={() => {
+                        setStatus("In process")
+                        getReportByStatus("In process")
+                      }}>In process</label>
+                      <label className="menu-item" onClick={() => {
+                        setStatus("Solved")
+                        getReportByStatus("Solved")
+                      }}>Solved</label>
                     </div>
                   </div>
                 </li>
@@ -141,7 +181,7 @@ export const TrainerPage = () => {
           </div>
         ) : (
           reports.map((report) => (
-            <Cards key={report._id} id={report._id} setReports={setReports} reportData={report} user={user} reportss={reports} />
+            <Cards key={report._id} reportData={report} user={user} setReports={setReports} supportList={supportList} />
           ))
         )}
       </div>
