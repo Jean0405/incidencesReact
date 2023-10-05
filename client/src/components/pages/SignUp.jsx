@@ -48,6 +48,8 @@ export const SignUp = () => {
           }
         })
       }
+    } else {
+      console.log(response);
     }
   };
 

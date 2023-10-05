@@ -56,7 +56,7 @@ export const CardsSupport = ({ reportData, setReports }) => {
         progress: undefined,
         theme: "dark",
       });
-      let response = await (await fetch(`http://127.25.25.26:3300/v1/supports/report/id=${reports._id}`, {
+      let response = await (await fetch(`http://192.168.129.72:5176/v1/supports/report/id=${reports._id}`, {
         method: "GET",
         headers: {
           "Authorization": localStorage.getItem("token")

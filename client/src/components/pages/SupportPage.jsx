@@ -10,6 +10,7 @@ export const SupportPage = () => {
   let user = location.state.user;
 
   const [reportList, setReportList] = useState([])
+  const [reportList2, setReportList2] = useState([])
 
   const getReportsBySupport = async () => {
     let response = await (await fetch(`http://192.168.129.72:5176/v1/reports/user=${user.username}`, {
@@ -25,7 +26,7 @@ export const SupportPage = () => {
 
   useEffect(() => {
     getReportsBySupport();
-  }, [reportList])
+  }, [setReportList2])
 
   return (
     <div className=''>
@@ -46,7 +47,7 @@ export const SupportPage = () => {
           </div>
         ) : (
           reportList.map((report) => (
-            <CardsSupport key={report._id} reportData={report} setReports={setReportList} user={user} />
+            <CardsSupport key={report._id} reportData={report} setReports={setReportList2} user={user} />
           ))
         )}
       </div>

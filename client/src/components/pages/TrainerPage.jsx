@@ -17,7 +17,7 @@ export const TrainerPage = () => {
 
   //GET ALL REPORTS
   const getAllReports = async () => {
-    let response = await (await fetch(`http://127.25.25.26:3300/v1/reports`, {
+    let response = await (await fetch(`http://192.168.129.72:5176/v1/reports`, {
       method: "GET",
       headers: {
         Authorization: localStorage.getItem("token")
@@ -28,7 +28,7 @@ export const TrainerPage = () => {
 
   //GET ALL SUPPORT USERS
   const getAllSupports = async () => {
-    const response = await (await fetch(`http://127.25.25.26:3300/v1/supports`, {
+    const response = await (await fetch(`http://192.168.129.72:5176/v1/supports`, {
       method: "GET",
       headers: {
         "Authorization": localStorage.getItem("token")
@@ -44,7 +44,7 @@ export const TrainerPage = () => {
 
   //GET REPORTS BY STATUS
   const getReportByStatus = async (option) => {
-    const response = await (await fetch(`http://127.25.25.26:3300/v1/reports/status=${option.toLowerCase()}`, {
+    const response = await (await fetch(`http:/192.168.129.72:5176/v1/reports/status=${option.toLowerCase()}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
