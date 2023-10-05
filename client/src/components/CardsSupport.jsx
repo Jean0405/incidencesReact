@@ -34,7 +34,7 @@ export const CardsSupport = ({ reportData, setReports }) => {
   const editReport = async (e) => {
     console.log(reports._id);
     e.preventDefault()
-    let response = await (await fetch(`http://127.25.25.26:3300/v1/supports/report/id=${reports._id}`, {
+    let response = await (await fetch(`http://192.168.129.72:5176/v1/supports/report/id=${reports._id}`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export const CardsSupport = ({ reportData, setReports }) => {
         progress: undefined,
         theme: "dark",
       });
-      let response = await (await fetch(`http://127.25.25.26:3300/v1/supports/report/id=${reports._id}`, {
+      let response = await (await fetch(`http://192.168.129.72:5176/v1/supports/report/id=${reports._id}`, {
         method: "GET",
         headers: {
           "Authorization": localStorage.getItem("token")
@@ -134,7 +134,7 @@ export const CardsSupport = ({ reportData, setReports }) => {
           <span className="badge badge-flat-primary text-blue-400">{capitalizeFirstLetter(reports.category)}</span>
         </div>
       </div>
-      {/* <ToastContainer/> */}
+      <ToastContainer/>
     </div>
   )
 }

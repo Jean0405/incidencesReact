@@ -19,7 +19,7 @@ const DIST_DIRECTORY = path.join(__dirname, "../../client/dist");
 
 //middlewares
 APP.use(express.json());
-APP.use(cors())
+APP.use(cors());
 
 //routes
 APP.use("/v1", v1Routes);
