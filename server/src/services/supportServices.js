@@ -5,7 +5,6 @@ import { ObjectId } from "mongodb";
  * *PUT REPORT BY SUPPORT
  */
 export const putReportBySupport = async (info) => {
-  console.log(info);
   let db = await connDB();
   let collection = db.collection("reports");
 
@@ -16,10 +15,22 @@ export const putReportBySupport = async (info) => {
   const update = {
     $set: {
       state: info.status,
-      "support.diagnosis": info.diagnosis
+      "support.diagnosis": info.diagnosis,
     },
   };
+  console.log(filter,update);
 
-  await collection.updateOne(filter, update);
+  let data = await collection.updateOne(filter, update);
+  console.log(data);
   return;
+};
+
+/**
+ * *GET ALL SUPPORTS
+ */
+export const getAllSupports = async () => {
+  let db = await connDB();
+  let collection = db.collection("users");
+  let data = await collection.find({ role: "support" }).toArray();
+  return data;
 };
