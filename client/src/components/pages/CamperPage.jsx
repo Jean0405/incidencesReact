@@ -9,7 +9,6 @@ import LottieAnimation from "lottie-react";
 import astronautAnimation from "../../assets/animation_ln37lp2p.json"
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
-import { Footer } from "../Footer";
 import parseDate from "../libs/parseDate";
 
 
