@@ -17,7 +17,7 @@ export const TrainerPage = () => {
 
   //GET ALL REPORTS
   const getAllReports = async () => {
-    let response = await (await fetch(`http://192.168.129.72:5176/v1/reports`, {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/reports`, {
       method: "GET",
       headers: {
         Authorization: localStorage.getItem("token")
@@ -28,7 +28,7 @@ export const TrainerPage = () => {
 
   //GET ALL SUPPORT USERS
   const getAllSupports = async () => {
-    const response = await (await fetch(`http://192.168.129.72:5176/v1/supports`, {
+    const response = await (await fetch(`http://127.25.25.26:3300/v1/supports`, {
       method: "GET",
       headers: {
         "Authorization": localStorage.getItem("token")
@@ -43,8 +43,8 @@ export const TrainerPage = () => {
   }, [])
 
   //GET REPORTS BY STATUS
-  const getReportByStatus = async (option) => {
-    const response = await (await fetch(`http:/192.168.129.72:5176/v1/reports/status=${option.toLowerCase()}`, {
+  const getByStatus = async (option) => {
+    const response = await (await fetch(`http://127.25.25.26:3300/v1/reports/status=${option.toLowerCase()}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -58,11 +58,10 @@ export const TrainerPage = () => {
 
   //GET REPORTS BY SEVERITY
   const getReportsBySeverity = async (option) => {
-    const response = await (await fetch(`http://192.168.129.72:5176/v1/reports/severity=${option.toLowerCase()}`, {
+    const response = await (await fetch(`http://127.25.25.26:3300/v1/reports/severity=${option.toLowerCase()}`, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem("token")
+        "Authorization": localStorage.getItem("token")
       }
     })).json();
     setReports(response.data)
@@ -72,11 +71,10 @@ export const TrainerPage = () => {
   //GET REPORTS BY USERNAME
   const getIncidentByUsername = async (event) => {
     event.preventDefault();
-    let response = await (await fetch(`http://192.168.129.72:5176/v1/reports/user=${username}`, {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/reports/user=${username}`, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem("token")
+        "Authorization": localStorage.getItem("token")
       }
     })).json()
     setUsername("")
@@ -137,9 +135,9 @@ export const TrainerPage = () => {
             <section className="menu-section">
               <ul className="menu-items">
                 <li>
-                  <input type="checkbox" id="menu-2" className="menu-toggle" />
-                  <label className="menu-item justify-between" htmlFor="menu-2">
-                    <span className='text-black dark:text-white'>{status}</span>
+                  <input type="checkbox" id="menu-1" className="menu-toggle" />
+                  <label className="menu-item justify-between" htmlFor="menu-1">
+                    <span className='text-black dark:text-white'>{severity}</span>
                     <span className="menu-icon">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" className="w-4 h-4 stroke-content3">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -150,16 +148,16 @@ export const TrainerPage = () => {
                     <div className="min-h-0">
                       <label className="menu-item" onClick={() => {
                         setStatus("Not solved")
-                        getReportByStatus("Not solved")
-                      }}>Not Solved</label>
-                      <label className="menu-item" onClick={() => {
-                        setStatus("In process")
-                        getReportByStatus("In process")
-                      }}>In process</label>
+                        getByStatus("Not solved")
+                      }}>Not solved</label>
                       <label className="menu-item" onClick={() => {
                         setStatus("Solved")
-                        getReportByStatus("Solved")
+                        getByStatus("Solved")
                       }}>Solved</label>
+                      <label className="menu-item" onClick={() => {
+                        setStatus("In progress")
+                        getByStatus("In progress")
+                      }}>In progress</label>
                     </div>
                   </div>
                 </li>

@@ -13,7 +13,7 @@ export const SignIn = () => {
   const signIn = async (event) => {
     event.preventDefault();
 
-    let response = await (await fetch("http://192.168.129.72:5176/v1/auth/signIn", {
+    let response = await (await fetch("http://127.25.25.26:3300/v1/auth/signIn", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
