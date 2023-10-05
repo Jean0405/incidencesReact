@@ -135,8 +135,8 @@ export const TrainerPage = () => {
             <section className="menu-section">
               <ul className="menu-items">
                 <li>
-                  <input type="checkbox" id="menu-1" className="menu-toggle" />
-                  <label className="menu-item justify-between" htmlFor="menu-1">
+                  <input type="checkbox" id="menu-2" className="menu-toggle" />
+                  <label className="menu-item justify-between" htmlFor="menu-2">
                     <span className='text-black dark:text-white'>{severity}</span>
                     <span className="menu-icon">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" className="w-4 h-4 stroke-content3">
