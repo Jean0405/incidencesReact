@@ -13,7 +13,7 @@ export const SignIn = () => {
   const signIn = async (event) => {
     event.preventDefault();
 
-    let response = await (await fetch("http://127.25.25.26:3300/v1/auth/signIn", {
+    let response = await (await fetch("http://192.168.129.72:5176/v1/auth/signIn", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const SignIn = () => {
             user: response.user[0]
           }
         })
-      }else if (response.user[0].role == "support") {
+      } else if (response.user[0].role == "support") {
         redirect("/supportPage", {
           state: {
             user: response.user[0]
@@ -50,7 +50,7 @@ export const SignIn = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 bg-zinc-900">
       <div className="md:col-span-1 hidden md:flex justify-center items-center">
-      <LottieAnimation
+        <LottieAnimation
           animationData={astronautAnimation}
           loop={true}
           width="100%"
