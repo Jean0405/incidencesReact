@@ -13,7 +13,7 @@ export const SupportPage = () => {
   const [reportList2, setReportList2] = useState([])
 
   const getReportsBySupport = async () => {
-    let response = await (await fetch(`http://192.168.129.72:5176/v1/reports/user=${user.username}`, {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/reports/user=${user.username}`, {
       headers: {
         Authorization: localStorage.getItem("token")
       }

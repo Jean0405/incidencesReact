@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-export const CardsSupport = ({ reportData, setReports }) => {
+export const CardsSupport = ({ reportData, setReports, user }) => {
   const reports = reportData;
   const [state, setState] = useState("");
   const [diagnosis, setDiagnosis] = useState("");
@@ -34,7 +34,7 @@ export const CardsSupport = ({ reportData, setReports }) => {
   const editReport = async (e) => {
     console.log(reports._id);
     e.preventDefault()
-    let response = await (await fetch(`http://192.168.129.72:5176/v1/supports/report/id=${reports._id}`, {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/supports/report/id=${reports._id}`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',
@@ -56,12 +56,11 @@ export const CardsSupport = ({ reportData, setReports }) => {
         progress: undefined,
         theme: "dark",
       });
-      let response = await (await fetch(`http://192.168.129.72:5176/v1/supports/report/id=${reports._id}`, {
-        method: "GET",
-        headers: {
-          "Authorization": localStorage.getItem("token")
-        }
-      })).json()
+      let response = await (await fetch(`http://127.25.25.26:3300/v1/reports/user=${user.username}`, {
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    })).json();
       setReports(response.data)
     } else {
       console.log(response);
@@ -108,7 +107,7 @@ export const CardsSupport = ({ reportData, setReports }) => {
                     <p className="font-bold text-sky-600 pb-2">Assign severity</p>
                     <select value={state} onChange={(e) => setState(e.target.value)} className="select select-solid-primary max-w-full mt-1" required>
                       <option value="solved">Solved</option>
-                      <option value="in progress">In progress</option>
+                      <option value="in process">In progress</option>
                       <option value="not solved">Not solved</option>
                     </select>
                   </div>

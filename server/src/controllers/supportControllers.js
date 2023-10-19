@@ -17,7 +17,7 @@ export const putReportBySupport = async (req, res) => {
     res.status(500).json({
       status: 500,
       message: "ERROR UPDATING THE REPORT",
-      errorInfo: error.message,
+      errorInfo: error.errInfo.details.schemaRulesNotSatisfied,
     });
   }
 };

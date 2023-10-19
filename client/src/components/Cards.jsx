@@ -31,7 +31,7 @@ export const Cards = ({ reportData, user, setReports, supportList }) => {
 
 
   const deleteIncident = async () => {
-    let response = await (await fetch(`http://192.168.129.72:5176/v1/reports/id=${reports._id}`, {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/reports/id=${reports._id}`, {
       method: "DELETE",
       headers: {
         "Authorization": localStorage.getItem("token")
@@ -48,7 +48,7 @@ export const Cards = ({ reportData, user, setReports, supportList }) => {
         progress: undefined,
         theme: "dark",
       });
-      let response = await (await fetch(`http://192.168.129.72:5176/v1/reports`, {
+      let response = await (await fetch(`http://127.25.25.26:3300/v1/reports`, {
         method: "GET",
         headers: {
           "Authorization": localStorage.getItem("token")
@@ -72,7 +72,7 @@ export const Cards = ({ reportData, user, setReports, supportList }) => {
 
   const editReport = async (e) => {
     e.preventDefault()
-    let response = await (await fetch(`http://192.168.129.72:5176/v1/trainers/report/id=${reports._id}`, {
+    let response = await (await fetch(`http://127.25.25.26:3300/v1/trainers/report/id=${reports._id}`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export const Cards = ({ reportData, user, setReports, supportList }) => {
         progress: undefined,
         theme: "dark",
       });
-      let response = await (await fetch(`http://192.168.129.72:5176/v1/reports`, {
+      let response = await (await fetch(`http://127.25.25.26:3300/v1/reports`, {
         method: "GET",
         headers: {
           "Authorization": localStorage.getItem("token")

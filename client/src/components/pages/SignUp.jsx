@@ -9,13 +9,13 @@ export const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("")
+  const [role, setRole] = useState("camper")
 
   //API REQUEST
   const SignUp = async (event) => {
     event.preventDefault();
 
-    let response = await (await fetch("http://192.168.129.72:5176/v1/auth/signUp", {
+    let response = await (await fetch("http://127.25.25.26:3300/v1/auth/signUp", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
